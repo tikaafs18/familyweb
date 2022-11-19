@@ -57,8 +57,6 @@ module.exports = {
             })
     },
     add: (req, res, next) => {
-        console.log('mw address')
-
         let { full_address, province, idprovince, city, idcity, district, iddistrict, postalcode, idpostalcode } = req.body;
 
         dbConf.query(`INSERT INTO address (user_id, full_address, province, province_id, city, city_id, district, district_id, postalcode, postalcode_id)

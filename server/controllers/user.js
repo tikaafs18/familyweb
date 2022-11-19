@@ -16,8 +16,6 @@ module.exports = {
             })
     },
     add: (req, res, next) => {
-        console.log('mw add')
-
         let { name, phone_number, birth_date, mom, dad, gender } = req.body;
 
         dbConf.query(`INSERT INTO user(name, gender, phone_number, birth_date) 
@@ -34,8 +32,6 @@ module.exports = {
                 }
 
                 if (results.insertId != 0) {
-                    console.log('data belum tersedia, mw add data success')
-
                     userId = results.insertId
                     next()
                 } else {
@@ -78,8 +74,6 @@ module.exports = {
             })
     },
     addMom: (req, res, next) => {
-        console.log('mw mom')
-
         let { mom, gender } = req.body;
         dbConf.query(`INSERT INTO user(name, gender) 
         SELECT ${dbConf.escape(mom)},${dbConf.escape(gender)}
@@ -99,23 +93,16 @@ module.exports = {
                                 return res.status(500).send(err)
                             }
                             mom_id = results[0].iduser
-                            console.log('mom id yang sudah exist', mom_id)
-                            console.log('results yang sudah exist', results)
-
                             next()
                         })
                 } else {
                     mom_id = results.insertId
-                    console.log('mom id baru', mom_id)
-
                     next()
                 }
 
             })
     },
     addDad: (req, res, next) => {
-        console.log('mw addad')
-
         let { dad, gender } = req.body;
         dbConf.query(`INSERT INTO user(name, gender) 
         SELECT ${dbConf.escape(dad)},${dbConf.escape(gender)}
@@ -144,9 +131,6 @@ module.exports = {
             })
     },
     addFamily: (req, res, next) => {
-        console.log('mw addfam')
-        console.log(dad_id, mom_id)
-
         dbConf.query(`INSERT INTO family(dad_id,mom_id) 
     SELECT ${dad_id},${mom_id}
         FROM dual
@@ -159,30 +143,21 @@ module.exports = {
                 }
 
                 if (results.insertId == 0) {
-                    console.log('mw addfam exist')
-
                     dbConf.query(`SELECT idfamily from family WHERE dad_id = ${dad_id}`,
                         (err, results) => {
                             if (err) {
                                 return res.status(500).send(err)
                             }
-                            console.log('mw addfam exist + get idfam', results.idfamily)
-
                             family_id = results[0].idfamily
                             next()
                         })
                 } else {
-                    console.log('mw addfam new', results.insertId)
-
                     family_id = results.insertId
                     next()
                 }
             })
     },
     addChild: (req, res) => {
-        console.log('mw addchild')
-        console.log(userId, family_id)
-
         dbConf.query(`INSERT INTO child(child_id,family_id) 
         SELECT ${userId},${family_id}
             FROM dual
