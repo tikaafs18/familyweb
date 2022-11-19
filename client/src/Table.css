@@ -1,0 +1,24 @@
+.table-family th,
+.table-family td {
+    padding: 1em 1em 1em 0.5em;
+}
+
+.table-family table {
+    padding: 50px;
+    border-collapse: collapse;
+}
+.table-family{
+    margin: 5em 5.5em 1.5em 5.5em;
+    width: 90%;
+}
+
+.table-family thead {
+    background: #5350D5;
+    color: white;
+    font-weight: bold;
+    text-align: left;
+}
+
+.table-family tbody td {
+    border-bottom: 1px solid #dddddd;
+}
